@@ -2,7 +2,7 @@
 
 public abstract class BaseErrors<T>
 {
-    public static string ErrorGroup { get; set; } = typeof(T).Name; // typically name of the domain entity
+    protected static string ErrorGroup => typeof(T).Name;
 
     public static Error NotFound() => Error.NotFound($"{ErrorGroup}.NotFound", $"the {ErrorGroup} was not found");
     public static Error NotFound(Guid identifier) => NotFound(identifier.ToString());

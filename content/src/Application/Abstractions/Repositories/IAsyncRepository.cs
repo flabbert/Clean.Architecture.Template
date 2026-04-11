@@ -12,8 +12,8 @@ public interface IAsyncRepository<T, in TX>
     IQueryable<T> GetAsQueryable(bool split, bool tracked = false);
     ValueTask<List<T>> ListAllAsync(CancellationToken cancellationToken = default);
     ValueTask<T> AddAsync(T entity, CancellationToken cancellationToken = default);
-    Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
-    Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
-    Task DeleteAsync(TX id, CancellationToken cancellationToken = default);
+    ValueTask UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    ValueTask DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    ValueTask DeleteAsync(TX id, CancellationToken cancellationToken = default);
     ValueTask<IReadOnlyList<T>> GetPagedResponseAsync(int page, int size, CancellationToken cancellationToken = default);
 }

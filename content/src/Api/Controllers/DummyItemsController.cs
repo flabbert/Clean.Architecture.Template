@@ -9,6 +9,12 @@ namespace Clean.Architecture.Template.Api.Controllers;
 [Route("api/[controller]")]
 public class DummyItemsController(IMediator mediator) : ControllerBase
 {
+    [HttpGet]
+    public async Task<IActionResult> GetAll() => await mediator.Send(new GetAllDummyItemsQuery()).ToHttpResponse();
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id) => await mediator.Send(new GetDummyItemByIdQuery(id)).ToHttpResponse();
+
     [HttpPost]
     public async Task<IActionResult> Create(CreateDummyItemCommand command) => await mediator.Send(command).ToHttpResponse();
 }

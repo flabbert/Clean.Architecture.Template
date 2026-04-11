@@ -8,14 +8,22 @@ public static class DotEnv
 
         foreach (var line in File.ReadAllLines(filePath))
         {
-            var parts = line.Split(
-                '=',
-                StringSplitOptions.RemoveEmptyEntries);
+            var trimmed = line.Trim();
 
-            if (parts.Length != 2)
+            if (string.IsNullOrEmpty(trimmed) || trimmed.StartsWith('#'))
                 continue;
 
-            Environment.SetEnvironmentVariable(parts[0], parts[1]);
+            var separatorIndex = trimmed.IndexOf('=');
+            if (separatorIndex < 1)
+                continue;
+
+            var key = trimmed[..separatorIndex].Trim();
+            var value = trimmed[(separatorIndex + 1)..].Trim();
+
+            if (value is ['"', .., '"'] or ['\'', .., '\''])
+                value = value[1..^1];
+
+            Environment.SetEnvironmentVariable(key, value);
         }
     }
 }

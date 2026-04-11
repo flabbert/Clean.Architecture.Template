@@ -5,6 +5,7 @@
   <Folder Name="/Core/">
     <Project Path="src/Application/Application.csproj" />
     <Project Path="src/Domain/Domain.csproj" />
+    <Project Path="src/Infrastructure/Infrastructure.csproj" />
     <Project Path="src/SharedKernel/SharedKernel.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
@@ -13,5 +14,8 @@
     <File Path="dotnet-tools.json" />
     <File Path="Nuget.Config" />
     <File Path="start.ps1" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/Application.Tests/Application.Tests.csproj" />
   </Folder>
 </Solution>
