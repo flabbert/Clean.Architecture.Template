@@ -89,6 +89,30 @@
                 "fallbackVariableName": "HttpsPortGenerated"
             },
             "replaces": "7272"
+        },
+        "DatabaseProvider": {
+            "type": "parameter",
+            "datatype": "choice",
+            "description": "The database provider to use.",
+            "choices": [
+                {
+                    "choice": "sqlite",
+                    "description": "Use SQLite"
+                },
+                {
+                    "choice": "postgres",
+                    "description": "Use PostgreSQL"
+                }
+            ],
+            "defaultValue": "postgres"
+        },
+        "Postgres": {
+            "type": "computed",
+            "value": "(DatabaseProvider == \"postgres\")"
+        },
+        "Sqlite": {
+            "type": "computed",
+            "value": "(DatabaseProvider == \"sqlite\")"
         }
     }
 }
