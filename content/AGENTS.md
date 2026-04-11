@@ -313,12 +313,6 @@ Overloads exist for `Result`, `Result<T>`, `ValueTask<Result>`, and `ValueTask<R
 
 ---
 
-## Husky Pre-Commit Hooks
-
-Configured in `.husky/task-runner.json`. Runs `dotnet build` and `dotnet test` on pre-commit. Husky is installed via `dotnet tool restore` + `dotnet husky install`.
-
----
-
 ## How To: Add a New Entity
 
 1. **Domain** — Create `src/Domain/{EntityName}.cs`. Implement `IIdentifiable<Guid>` (or appropriate ID type). Keep it a simple POCO.
