@@ -33,6 +33,7 @@
 9. **Use Serilog for all logging.** Serilog is configured in `src/Api/Program.cs` with structured logging, context enrichment, and console + Seq sinks.
 10. **Nullable reference types are enabled** across all projects (`<Nullable>enable</Nullable>`).
 11. **Do NOT use FluentValidation.** This project does not use FluentValidation or any similar validation library. Validation logic belongs in command/query handlers using the `Result`/`Error` pattern from SharedKernel.
+12. **Do NOT add any library or nuget package without express permission**
 
 ---
 
