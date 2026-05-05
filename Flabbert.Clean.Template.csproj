@@ -3,7 +3,7 @@
     <!-- The package metadata. Fill in the properties marked as TODO below -->
     <!-- Follow the instructions on https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices -->
     <PackageId>Flabbert.Clean.Template</PackageId>
-    <PackageVersion>1.1.2</PackageVersion>
+    <PackageVersion>1.1.3</PackageVersion>
     <Title>TODO: fill the package name here</Title>
     <Authors>flabbert</Authors>
     <Description>flabberts clean architecture template</Description>
