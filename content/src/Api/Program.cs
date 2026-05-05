@@ -1,5 +1,5 @@
+using Clean.Architecture.Template.Api.ExceptionHandlers;
 using Clean.Architecture.Template.Api.Extensions;
-using Clean.Architecture.Template.Api.Middleware;
 using Clean.Architecture.Template.Application;
 using Clean.Architecture.Template.Infrastructure;
 using Serilog;
@@ -43,7 +43,7 @@ builder.Services.AddCoreApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddExceptionHandlers();
 builder.Services.AddProblemDetails();
 builder.Services.AddHealthChecks();
 builder.Services.AddCors(options =>
