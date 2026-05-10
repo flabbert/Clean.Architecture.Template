@@ -1,5 +1,4 @@
 ﻿using Clean.Architecture.Template.Application.Behaviours;
-using Clean.Architecture.Template.Application.Features.DummyItems;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -12,7 +11,7 @@ public static class ApplicationExtensions
         services.AddMediator((options) =>
             {
                 options.ServiceLifetime = ServiceLifetime.Scoped;
-                options.Assemblies = [Assembly.GetExecutingAssembly(), typeof(CreateDummyItemCommand).Assembly];
+                options.Assemblies = [Assembly.GetExecutingAssembly()];
                 options.PipelineBehaviors = [typeof(LoggingBehaviour<,>)];
                 options.NotificationPublisherType = typeof(Mediator.ForeachAwaitPublisher);
             }

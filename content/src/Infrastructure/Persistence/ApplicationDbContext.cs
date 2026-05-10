@@ -1,4 +1,3 @@
-using Clean.Architecture.Template.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clean.Architecture.Template.Infrastructure.Persistence;
