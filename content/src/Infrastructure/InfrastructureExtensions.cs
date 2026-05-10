@@ -1,6 +1,4 @@
-using Clean.Architecture.Template.Application.Abstractions.Repositories;
 using Clean.Architecture.Template.Infrastructure.Persistence;
-using Clean.Architecture.Template.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +15,6 @@ public static class InfrastructureExtensions
 #else
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection") ?? "Data Source=app.db"));
 #endif
-
-        services.AddScoped<IDummyItemRepository, DummyItemRepository>();
 
         return services;
     }
