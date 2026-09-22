@@ -121,7 +121,7 @@ public class DummyItem : IIdentifiable<Guid>
 | Path | `src/Application/` |
 | Namespace | `Clean.Architecture.Template.Application` |
 | References | Domain |
-| Key packages | `Mediator.Abstractions` (3.0.2), `Mediator.SourceGenerator` (3.0.2), `Facet` (6.0.1), `Microsoft.Extensions.Logging` (10.0.5) |
+| Key packages | `Mediator.Abstractions` (3.0.2), `Mediator.SourceGenerator` (3.0.2), `Facet` (6.6.8), `Microsoft.Extensions.Logging` (10.0.11) |
 
 ### Folder Convention
 
@@ -225,7 +225,7 @@ DI is configured in `src/Application/ApplicationExtensions.cs` via `services.Add
 | Path | `src/Api/` |
 | Namespace | `Clean.Architecture.Template.Api` |
 | References | Application, Infrastructure |
-| Key packages | `Mediator.Abstractions` (3.0.2), `Microsoft.AspNetCore.OpenApi` (10.0.5), Serilog ecosystem |
+| Key packages | `Mediator.Abstractions` (3.0.2), `Microsoft.AspNetCore.OpenApi` (10.0.11), Serilog ecosystem |
 | Ports | HTTP: 5282, HTTPS: 7272 |
 
 ### Controller Pattern
@@ -246,14 +246,43 @@ namespace Clean.Architecture.Template.Api.Controllers;
 public class DummyItemsController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Create(CreateDummyItemCommand command)
+    public async Task<IResult> Create(CreateDummyItemCommand command)
         => await mediator.Send(command).ToHttpResponse();
+}
+```
+
+### Optional: Minimal API Endpoints
+
+Controllers are the default. Minimal API endpoints may be used alongside them (e.g. if a project needs Native AOT, which MVC does not support). There is no measurable throughput difference for a normal long-running API.
+
+Do **not** use the chained/fluent style (`MapGroup(...).WithTags(...).MapGet(...)...`). Use one static class per resource in `src/Api/Endpoints/`: a plain route table plus named methods acting as actions. Call `{EntityName}sEndpoints.Map(app);` in `Program.cs`.
+
+```csharp
+using Clean.Architecture.Template.Api.Extensions;
+using Clean.Architecture.Template.Application.Features.DummyItems;
+using Mediator;
+
+namespace Clean.Architecture.Template.Api.Endpoints;
+
+public static class DummyItemsEndpoints
+{
+    public static void Map(IEndpointRouteBuilder app)
+    {
+        app.MapGet("api/dummyitems/{id:guid}", GetById);
+        app.MapPost("api/dummyitems", Create);
+    }
+
+    private static async Task<IResult> GetById(Guid id, IMediator mediator, CancellationToken ct)
+        => await mediator.Send(new GetDummyItemQuery(id), ct).ToHttpResponse();
+
+    private static async Task<IResult> Create(CreateDummyItemCommand command, IMediator mediator, CancellationToken ct)
+        => await mediator.Send(command, ct).ToHttpResponse();
 }
 ```
 
 ### Result → HTTP Response Mapping
 
-`src/Api/Extensions/ResultExtensions.cs` provides `.ToHttpResponse()` extension methods:
+`src/Api/Extensions/ResultExtensions.cs` provides `.ToHttpResponse()` extension methods returning `IResult` (usable from both controllers and minimal API endpoints):
 - **Success** → `200 OK` with `result.Value` as body
 - **Failure** → HTTP status from `Error.Code` (HttpStatusCode) with the `Error` object as body
 
@@ -284,7 +313,7 @@ Overloads exist for `Result`, `Result<T>`, `ValueTask<Result>`, and `ValueTask<R
 | Path | `src/Infrastructure/` |
 | Namespace | `Clean.Architecture.Template.Infrastructure` |
 | References | Application, Domain, SharedKernel |
-| Key packages | `Microsoft.EntityFrameworkCore` (10.0.5), `Microsoft.EntityFrameworkCore.Sqlite` (10.0.5) |
+| Key packages | `Microsoft.EntityFrameworkCore` (10.0.11), `Microsoft.EntityFrameworkCore.Sqlite` (10.0.11) |
 | Purpose | EF Core DbContext, repository implementations, external service clients |
 
 ### Key Files
@@ -309,7 +338,8 @@ Overloads exist for `Result`, `Result<T>`, `ValueTask<Result>`, and `ValueTask<R
 | Property | Value |
 |---|---|
 | Path | `tests/Application.Tests/` |
-| Framework | xUnit, NSubstitute (5.3.0) |
+| Framework | xUnit v3 (4.0.1), NSubstitute (6.2.0), on Microsoft.Testing.Platform (opted in via `global.json`) |
+| Coverage | `Microsoft.Testing.Extensions.CodeCoverage` (18.11.2): `dotnet test --coverage --coverage-output-format cobertura` → `TestResults/` |
 | Convention | One test class per handler, file at `Features/{EntityName}/{HandlerName}Tests.cs` |
 
 ---

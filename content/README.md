@@ -26,6 +26,9 @@ The API will be available at `https://localhost:7272` / `http://localhost:5282`.
 
 ```bash
 dotnet test
+
+# with coverage (Cobertura report in TestResults/)
+dotnet test --coverage --coverage-output-format cobertura
 ```
 
 ## Project Structure
