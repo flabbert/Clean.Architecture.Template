@@ -11,6 +11,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
+    <File Path="AGENTS.md" />
     <File Path="dotnet-tools.json" />
     <File Path="Nuget.Config" />
     <File Path="start.ps1" />

@@ -57,7 +57,7 @@ Api → Application → Domain → SharedKernel
 /Api           → Presentation layer (1 project: Api.csproj)
 /Core          → Domain + Application + SharedKernel + Infrastructure (4 projects)
 /Tests         → Application.Tests (xUnit + NSubstitute)
-/Solution Items → .editorconfig, .gitignore, dotnet-tools.json, Nuget.Config, start.ps1
+/Solution Items → .editorconfig, .gitignore, AGENTS.md, dotnet-tools.json, Nuget.Config, start.ps1
 ```
 
 ---
