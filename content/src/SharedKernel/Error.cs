@@ -6,7 +6,7 @@ namespace Clean.Architecture.Template.SharedKernel;
 public record Error
 {
     // ReSharper disable once CollectionNeverQueried.Global
-    public Dictionary<string, object> Data { get; set; } = [];
+    public Dictionary<string, object?> Data { get; set; } = [];
     private const string Category = "General";
     public static readonly Error None = new($"{Category}.None", string.Empty, ErrorCategory.Failure, HttpStatusCode.OK);
     public static readonly Error NullValue = new($"{Category}.Null", "Null value was provided", ErrorCategory.Failure, HttpStatusCode.UnprocessableEntity);
